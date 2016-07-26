@@ -30,4 +30,11 @@ router.put('/hero', (req, res) => {
   });
 });
 
+router.delete('/hero/:id', (req, res) => {
+  console.log(req.params.id);
+  console.log('deleted ' + heroes[req.params.id].name);
+  res.status(202).json({msg: 'deleted ' + heroes[req.params.id].name});
+  delete heroes[req.params.id];
+});
+
 module.exports = router;
