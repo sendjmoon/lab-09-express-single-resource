@@ -4,17 +4,9 @@ const heroRouter = express.Router();
 const Hero = require('../model/hero');
 let heroStorage = require('../lib/heroStorage');
 
-heroRouter.get('/', (req, res) => {
-  res.status(202).json({msg: 'request /hero/id to search by id. request /hero?\'querystring\' to create a new hero. accepted parameters are name, race, and faction'});
-});
-
 heroRouter.get('/hero/:id', (req, res) => {
   let heroId = req.params.id;
   res.status(202).json({msg: heroStorage[heroId]});
-});
-
-heroRouter.get('/hero/all', (req, res) => {
-  res.status(202).json({heroes: heroStorage});
 });
 
 heroRouter.post('/hero', (req, res) => {
