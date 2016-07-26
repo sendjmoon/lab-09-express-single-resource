@@ -1,5 +1,5 @@
 'use strict';
 
-let HeroList = module.exports = function(id) {
+module.exports = function HeroList(id) {
   this.id = id;
 };

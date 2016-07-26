@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/sendjmoon/lab-09-express-single-resource/issues"
   },
-  "homepage": "https://github.com/sendjmoon/lab-09-express-single-resource#readme"
+  "homepage": "https://github.com/sendjmoon/lab-09-express-single-resource#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2"
+  }
 }
