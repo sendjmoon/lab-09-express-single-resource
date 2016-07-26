@@ -16,20 +16,18 @@ router.get('/hero/:id', (req, res) => {
 
 router.post('/hero', (req, res) => {
   let newHero = new Hero(req.query.name, req.query.race, req.query.faction);
-  console.log(newHero.id);
+  console.log('added ' + req.query.name + ': ' + newHero.id);
   heroes[newHero.id] = newHero;
-  console.log(heroes);
   res.status(202).json({msg: heroes[newHero.id]});
 });
 
-router.post('/hero/:name/:race/:faction', (req, res) => {
-  let newHero = new Hero(req.params.name, req.params.race, req.params.faction);
-  console.log(newHero.id);
-  heroes[newHero.id] = newHero;
-  console.log(heroes);
+router.put('/hero', (req, res) => {
+  console.log(heroes[req.query.id].name + ' changed to ' + req.query.name);
+  heroes[req.query.id].name = req.query.name;
   res.status(202).json({
-    msg: 'Hero created',
-    name: req.params.name});
+    msg: 'updated name to ' + req.query.name,
+    hero: heroes[req.query.id]
+  });
 });
 
 module.exports = router;
