@@ -14,7 +14,8 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use('/api', heroRouter);
 
 app.use('*', function(req, res, next) {
-  res.sendError();
+  console.log('getting an error');
+  next(error);
 });
 
 app.listen(3000, () => console.log('server is up'));
