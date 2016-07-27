@@ -17,6 +17,9 @@
 # Linux trash folder which might appear on any partition or disk
 .Trash-*
 
+### Mongo DB ###
+# Databases from Mongo
+db
 
 ### Node ###
 # Logs
@@ -42,6 +45,7 @@ coverage
 build/Release
 
 # Dependency directories
+db
 node_modules
 jspm_packages
 
