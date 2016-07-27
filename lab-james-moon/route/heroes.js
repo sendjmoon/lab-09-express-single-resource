@@ -70,11 +70,4 @@ heroRouter.use('*', (req, res) => {
   return res.status(error.statusCode).send(error.responseMessage);
 });
 
-// heroRouter.use(bodyParser.json());
-
-// heroRouter.use((err, req, res, next) => {
-//   console.log(err.statusCode);
-//   res.status(err.statusCode || 500).send(err.message);
-// });
-
 module.exports = heroRouter;
