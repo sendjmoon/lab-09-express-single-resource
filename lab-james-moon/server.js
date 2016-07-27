@@ -6,10 +6,8 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 let app = express();
 
-
 app.use(morgan('combined'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
 app.use('/api', heroRouter);
 app.use('*', (req, res) => {
   let error = AppError.status404();
