@@ -4,10 +4,11 @@ let AppError = module.exports = exports = function(message, statusCode, response
   this.message = message;
   this.statusCode = statusCode;
   this.responseMessage = responseMessage;
+  this.type = 'AppError';
 };
 
 AppError.status400 = function() {
-  return new AppError('bad', 400, 'that\'s a bad request');
+  return new AppError('bad request', 400, 'that\'s a bad request');
 };
 
 AppError.status404 = function() {

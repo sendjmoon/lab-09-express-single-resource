@@ -8,11 +8,11 @@ let heroStorage = require('../lib/heroStorage');
 heroRouter.get('/hero/:id', (req, res) => {
   if (!heroStorage[req.params.id]) {
     let error = AppError.status400();
-    res.status(error.statusCode).send(error.responseMessage);
+    res.sendError(error);
   }
   if (req.params.id === undefined) {
     let error = AppError.status500();
-    res.status(error.statusCode).send(error.responseMessage);
+    res.sendError(error);
   }
   if (heroStorage[req.params.id]) {
     let heroId = req.params.id;
@@ -25,11 +25,13 @@ heroRouter.post('/hero', (req, res) => {
     let error = AppError.status400();
     return res.status(error.statusCode).send(error.responseMessage);
   }
+
   let newHero = new Hero(req.body.name, req.body.race, req.body.faction);
   if (req.body.name !== newHero.name || req.body.race !== newHero.race || req.body.faction !== newHero.faction) {
     let error = AppError.status500();
     return res.status(error.statusCode).send(error.responseMessage);
   }
+
   heroStorage[newHero.id] = newHero;
   if (heroStorage[newHero.id]) {
     console.log('added ' + newHero.name + ': ' + newHero.id);
@@ -39,12 +41,12 @@ heroRouter.post('/hero', (req, res) => {
 
 heroRouter.put('/hero/:id', (req, res) => {
   if (!heroStorage[req.params.id]) {
+    if (req.body.name === undefined || req.body.race === undefined || req.body.faction === undefined) {
+      let error = AppError.status500();
+      res.sendError(error);
+    }
     let error = AppError.status400();
-    return res.status(error.statusCode).send(error.responseMessage);
-  }
-  if (req.body.name === undefined || req.body.race === undefined || req.body.faction === undefined) {
-    let error = AppError.status500();
-    return res.status(error.statusCode).send(error.responseMessage);
+    res.sendError(error);
   }
   if (req.body.name) heroStorage[req.params.id].name = req.body.name;
   if (req.body.race) heroStorage[req.params.id].race = req.body.race;
@@ -54,21 +56,18 @@ heroRouter.put('/hero/:id', (req, res) => {
 
 heroRouter.delete('/hero/:id', (req, res) => {
   if (!heroStorage[req.params.id]) {
+    if(req.params.id === undefined) {
+      let error = AppError.status500();
+      res.sendError(error);
+    }
     let error = AppError.status400();
-    return res.status(error.statusCode).send(error.responseMessage);
+    res.sendError(error);
   }
-  if (req.params.id === undefined) {
-    let error = AppError.status500();
-    return res.status(error.statusCode).send(error.responseMessage);
+  if (req.params.id === heroStorage[req.params.id]) {
+    res.status(202).json({msg: 'deleted ' + heroStorage[req.params.id].name});
+    return delete heroStorage[req.params.id];
   }
-  res.status(202).json({msg: 'deleted ' + heroStorage[req.params.id].name});
-  return delete heroStorage[req.params.id];
 });
-
-// heroRouter.get('*', (req, res) => {
-//   // let error = AppError.status404();
-//   return res.sendError(new Error());
-// });
 
 heroRouter.get('/hero/test', (req, res) => {
   let error = AppError.status400();
