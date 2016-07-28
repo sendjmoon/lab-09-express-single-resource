@@ -65,9 +65,14 @@ heroRouter.delete('/hero/:id', (req, res) => {
   return delete heroStorage[req.params.id];
 });
 
-heroRouter.use('*', (req, res) => {
-  let error = AppError.status404();
-  return res.status(error.statusCode).send(error.responseMessage);
+// heroRouter.get('*', (req, res) => {
+//   // let error = AppError.status404();
+//   return res.sendError(new Error());
+// });
+
+heroRouter.get('/hero/test', (req, res) => {
+  let error = AppError.status400();
+  res.sendError(error);
 });
 
 module.exports = heroRouter;

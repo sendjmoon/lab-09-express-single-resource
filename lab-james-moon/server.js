@@ -2,20 +2,23 @@
 const express = require('express');
 const heroRouter = require('./route/heroes');
 const AppError = require('./model/error');
-const sendError = require('./model/sendError');
+const errorResponse = require('./model/error-response');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+// let sendError = errorResponse();
 let app = express();
 
+app.use(errorResponse());
+
+// app.use((err, req, res, next) => {
+//   res.sendError = function(err) {
+//     console.log('wtfwtfwtf');
+//   };
+// });
 
 app.use(morgan('combined'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
 app.use('/api', heroRouter);
 
-app.use('*', function(req, res, next) {
-  console.log('getting an error');
-  next(error);
-});
 
 app.listen(3000, () => console.log('server is up'));
