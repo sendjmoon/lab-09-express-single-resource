@@ -15,9 +15,9 @@ AppError.status400 = function() {
 };
 
 AppError.status404 = function() {
-  return new AppError('not there', 404, 'that page does not exist');
+  return new AppError('not found', 404, 'that page does not exist');
 };
 
 AppError.status500 = function() {
-  return new AppError('uh oh', 500, 'internal service error');
+  return new AppError('internal error', 500, 'internal service error');
 };

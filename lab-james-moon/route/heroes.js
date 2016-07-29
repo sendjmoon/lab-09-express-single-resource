@@ -7,15 +7,16 @@ let heroStorage = require('../lib/heroStorage');
 
 heroRouter.get('/hero/:id', (req, res) => {
   if (!heroStorage[req.params.id]) {
-    res.sendError(AppError.status400('bad request'));
-  }
-  if (req.params.id === undefined) {
-    res.sendError(AppError.status500('internal server error'));
+    return res.sendError(AppError.status404('not found'));
   }
   if (heroStorage[req.params.id]) {
     let heroId = req.params.id;
-    return res.status(202).json({msg: heroStorage[heroId]});
+    return res.status(202).json(heroStorage[heroId]);
   }
+});
+
+heroRouter.get('/hero/', (req, res) => {
+  return res.sendError(AppError.status400('bad request'));
 });
 
 heroRouter.post('/hero', (req, res) => {
@@ -31,7 +32,7 @@ heroRouter.post('/hero', (req, res) => {
   heroStorage[newHero.id] = newHero;
   if (heroStorage[newHero.id]) {
     console.log('added ' + newHero.name + ': ' + newHero.id);
-    return res.status(202).json({msg: heroStorage[newHero.id]});
+    return res.status(202).json(heroStorage[newHero.id]);
   }
 });
 
@@ -45,7 +46,7 @@ heroRouter.put('/hero/:id', (req, res) => {
   if (req.body.name) heroStorage[req.params.id].name = req.body.name;
   if (req.body.race) heroStorage[req.params.id].race = req.body.race;
   if (req.body.faction) heroStorage[req.params.id].faction = req.body.faction;
-  return res.status(202).json({hero: heroStorage[req.params.id]});
+  return res.status(202).json(heroStorage[req.params.id]);
 });
 
 heroRouter.delete('/hero/:id', (req, res) => {
@@ -61,10 +62,5 @@ heroRouter.delete('/hero/:id', (req, res) => {
     return res.status(202).json({msg: 'deleted hero'});
   }
 });
-
-heroRouter.get('/hero/test', (req, res) => {
-  return res.sendError(AppError.status404('page not found'));
-});
-
 
 module.exports = heroRouter;

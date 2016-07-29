@@ -7,7 +7,7 @@ const morgan = require('morgan');
 let app = express();
 
 app.use(errorResponse());
-app.use(morgan('combined'));
+app.use(morgan('dev'));
 app.use(jsonParser);
 app.use('/api', heroRouter);
 
