@@ -4,7 +4,10 @@ let AppError = module.exports = exports = function(message, statusCode, response
   this.message = message;
   this.statusCode = statusCode;
   this.responseMessage = responseMessage;
-  this.type = 'AppError';
+};
+
+AppError.isAppError = function(err) {
+  return err instanceof AppError;
 };
 
 AppError.status400 = function() {

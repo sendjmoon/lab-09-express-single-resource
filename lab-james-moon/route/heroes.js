@@ -1,5 +1,6 @@
 'use strict';
 const express = require('express');
+const jsonParser = require('body-parser').json();
 const heroRouter = express.Router();
 const Hero = require('../model/hero');
 const AppError = require('../model/error');
@@ -7,29 +8,25 @@ let heroStorage = require('../lib/heroStorage');
 
 heroRouter.get('/hero/:id', (req, res) => {
   if (!heroStorage[req.params.id]) {
-    let error = AppError.status400();
-    res.sendError(error);
+    res.sendError(AppError.status400('bad request'));
   }
   if (req.params.id === undefined) {
-    let error = AppError.status500();
-    res.sendError(error);
+    res.sendError(AppError.status500('internal server error'));
   }
   if (heroStorage[req.params.id]) {
     let heroId = req.params.id;
-    res.status(202).json({msg: heroStorage[heroId]});
+    return res.status(202).json({msg: heroStorage[heroId]});
   }
 });
 
-heroRouter.post('/hero', (req, res) => {
+heroRouter.post('/hero', jsonParser, (req, res) => {
   if (req.body.name === undefined || req.body.race === undefined || req.body.faction === undefined) {
-    let error = AppError.status400();
-    return res.status(error.statusCode).send(error.responseMessage);
+    return res.sendError(AppError.status400('bad request'));
   }
 
   let newHero = new Hero(req.body.name, req.body.race, req.body.faction);
   if (req.body.name !== newHero.name || req.body.race !== newHero.race || req.body.faction !== newHero.faction) {
-    let error = AppError.status500();
-    return res.status(error.statusCode).send(error.responseMessage);
+    return res.sendError(AppError.status500('internal server error'));
   }
 
   heroStorage[newHero.id] = newHero;
@@ -42,11 +39,9 @@ heroRouter.post('/hero', (req, res) => {
 heroRouter.put('/hero/:id', (req, res) => {
   if (!heroStorage[req.params.id]) {
     if (req.body.name === undefined || req.body.race === undefined || req.body.faction === undefined) {
-      let error = AppError.status500();
-      res.sendError(error);
+      return res.sendError(AppError.status500('internal server error'));
     }
-    let error = AppError.status400();
-    res.sendError(error);
+    return res.sendError(AppError.status400('bad request'));
   }
   if (req.body.name) heroStorage[req.params.id].name = req.body.name;
   if (req.body.race) heroStorage[req.params.id].race = req.body.race;
@@ -57,21 +52,20 @@ heroRouter.put('/hero/:id', (req, res) => {
 heroRouter.delete('/hero/:id', (req, res) => {
   if (!heroStorage[req.params.id]) {
     if(req.params.id === undefined) {
-      let error = AppError.status500();
-      res.sendError(error);
+      return res.sendError(AppError.status500('internal server error'));
     }
-    let error = AppError.status400();
-    res.sendError(error);
+    return res.sendError(AppError.status400('error bad request'));
   }
-  if (req.params.id === heroStorage[req.params.id]) {
-    res.status(202).json({msg: 'deleted ' + heroStorage[req.params.id].name});
-    return delete heroStorage[req.params.id];
+  if (req.params.id === heroStorage[req.params.id].id) {
+    console.log(heroStorage[req.params.id]);
+    delete heroStorage[req.params.id];
+    return res.status(202).json({msg: 'deleted hero'});
   }
 });
 
 heroRouter.get('/hero/test', (req, res) => {
-  let error = AppError.status400();
-  res.sendError(error);
+  return res.sendError(AppError.status404('page not found'));
 });
+
 
 module.exports = heroRouter;
