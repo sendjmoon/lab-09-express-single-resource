@@ -20,10 +20,9 @@ heroRouter.get('/hero/', (req, res) => {
 });
 
 heroRouter.post('/hero', (req, res) => {
-  if (req.body.name === undefined || req.body.race === undefined || req.body.faction === undefined) {
+  if(!req.body.name || !req.body.race || !req.body.faction) {
     return res.sendError(AppError.status400('bad request'));
   }
-
   let newHero = new Hero(req.body.name, req.body.race, req.body.faction);
   if (req.body.name !== newHero.name || req.body.race !== newHero.race || req.body.faction !== newHero.faction) {
     return res.sendError(AppError.status500('internal server error'));
@@ -37,12 +36,13 @@ heroRouter.post('/hero', (req, res) => {
 });
 
 heroRouter.put('/hero/:id', (req, res) => {
-  if (!heroStorage[req.params.id]) {
-    if (req.body.name === undefined || req.body.race === undefined || req.body.faction === undefined) {
-      return res.sendError(AppError.status500('internal server error'));
+  if (!req.body.name && !req.body.race && !req.body.faction) {
+    if (!heroStorage[req.params.id]) {
+      return res.sendError(AppError.status404('not found'));
     }
     return res.sendError(AppError.status400('bad request'));
   }
+  console.log(req.body.name);
   if (req.body.name) heroStorage[req.params.id].name = req.body.name;
   if (req.body.race) heroStorage[req.params.id].race = req.body.race;
   if (req.body.faction) heroStorage[req.params.id].faction = req.body.faction;
