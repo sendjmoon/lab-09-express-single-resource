@@ -17,6 +17,16 @@ describe('testing GET, PUT, and POST requests', function() {
       done();
     });
   });
+  it('/GET should respond with 404 not found error for unregistered routes', function(done) {
+    request('localhost:3000')
+    .get('/api/test')
+    .end(function(err, res) {
+      expect(err);
+      expect(res).to.have.status(404);
+      expect(res.text).to.eql('not found');
+      done();
+    });
+  });
   it('/GET should respond with 400 bad request error', function(done) {
     request('localhost:3000')
     .get('/api/hero')
