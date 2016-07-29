@@ -15,7 +15,7 @@ AppError.status400 = function() {
 };
 
 AppError.status404 = function() {
-  return new AppError('not found', 404, 'that page does not exist');
+  return new AppError('not found', 404, 'that page was not found');
 };
 
 AppError.status500 = function() {

@@ -23,7 +23,7 @@ describe('testing GET, PUT, and POST requests', function() {
     .end(function(err, res) {
       expect(err);
       expect(res).to.have.status(404);
-      expect(res.text).to.eql('not found');
+      expect(res.text).to.eql('that page was not found');
       done();
     });
   });
@@ -33,7 +33,7 @@ describe('testing GET, PUT, and POST requests', function() {
     .end(function(err, res) {
       expect(err);
       expect(res).to.have.status(400);
-      expect(res.text).to.eql('bad request');
+      expect(res.text).to.eql('that\'s a bad request');
       done();
     });
   });
@@ -43,7 +43,7 @@ describe('testing GET, PUT, and POST requests', function() {
     .end(function(err, res) {
       expect(err);
       expect(res).to.have.status(404);
-      expect(res.text).to.eql('not found');
+      expect(res.text).to.eql('that page was not found');
       done();
     });
   });
@@ -64,7 +64,7 @@ describe('testing GET, PUT, and POST requests', function() {
     .end(function(err, res) {
       expect(err);
       expect(res).to.have.status(400);
-      expect(res.text).to.eql('bad request');
+      expect(res.text).to.eql('that\'s a bad request');
       done();
     });
   });
@@ -75,7 +75,7 @@ describe('testing GET, PUT, and POST requests', function() {
     .end(function(err, res) {
       expect(err);
       expect(res).to.have.status(400);
-      expect(res.text).to.eql('bad request');
+      expect(res.text).to.eql('that\'s a bad request');
       done();
     });
   });
@@ -97,7 +97,7 @@ describe('testing GET, PUT, and POST requests', function() {
     .end(function(err, res) {
       expect(err);
       expect(res).to.have.status(400);
-      expect(res.text).to.eql('bad request');
+      expect(res.text).to.eql('that\'s a bad request');
       done();
     });
   });
@@ -108,7 +108,7 @@ describe('testing GET, PUT, and POST requests', function() {
     .end(function(err, res) {
       expect(err);
       expect(res).to.have.status(400);
-      expect(res.text).to.eql('bad request');
+      expect(res.text).to.eql('that\'s a bad request');
       done();
     });
   });
