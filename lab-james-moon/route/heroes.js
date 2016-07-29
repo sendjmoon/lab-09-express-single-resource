@@ -15,7 +15,7 @@ heroRouter.get('/hero/:id', (req, res) => {
   }
 });
 
-heroRouter.get('/hero/', (req, res) => {
+heroRouter.get('/hero', (req, res) => {
   return res.sendError(AppError.status400('bad request'));
 });
 
