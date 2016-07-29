@@ -8,10 +8,15 @@ Next, do `npm install` for dependencies.
 Then, `node server` (`nodemon` can also be used).
 
 ##Usage
-To create a new hero, access `/api/hero`. for example, an accepted format with HTTPie would be `http POST :3000/api/hero?'name=james&race=human&faction=alliance'`. This will instantiate a new hero object with their information which is stored in an object containing all heroes.
+Commands will be written using `HTTPie`
+GET an existing hero
+`http :3000/api/hero/unique_id` where `unique_id` is the unique id issued through UUID.
 
-To GET an existing hero, get their unique id which is provided upon a hero's creation. This can be accessed using `http :3000/api/hero/unique_id`.
+POST a new hero.
+`http POST :3000/api/hero name=name_value race=race_value faction=faction_value`
 
-To use a PUT request to update info, you can follow this format. `http PUT :3000/api/hero?'id=unique_id&property=new_variable'`
+Update info in an existing hero via PUT. Can be updated simultaneously or all at the same time.
+`http PUT :3000/api/hero/unique_id name=new_name race=new_race faction=new_faction`
 
-To do a DELETE request, you can type `http DELETE :3000/api/hero/unique_id`
+DELETE a hero
+`http DELETE :3000/api/hero/unique_id`

@@ -1,6 +1,5 @@
 'use strict';
 const express = require('express');
-const jsonParser = require('body-parser').json();
 const heroRouter = express.Router();
 const Hero = require('../model/hero');
 const AppError = require('../model/error');
@@ -19,7 +18,7 @@ heroRouter.get('/hero/:id', (req, res) => {
   }
 });
 
-heroRouter.post('/hero', jsonParser, (req, res) => {
+heroRouter.post('/hero', (req, res) => {
   if (req.body.name === undefined || req.body.race === undefined || req.body.faction === undefined) {
     return res.sendError(AppError.status400('bad request'));
   }

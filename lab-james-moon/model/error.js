@@ -19,5 +19,5 @@ AppError.status404 = function() {
 };
 
 AppError.status500 = function() {
-  return new AppError('fucked', 500, 'internal service error');
+  return new AppError('uh oh', 500, 'internal service error');
 };

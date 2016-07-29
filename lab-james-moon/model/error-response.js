@@ -8,7 +8,7 @@ module.exports = exports = function() {
         console.log('encountered AppError');
         return res.status(error.statusCode).send(error.message);
       }
-      console.log('not an AppError');
+      console.log('encountered a non AppError');
       return res.status(500).send(error.message);
     };
     next();
